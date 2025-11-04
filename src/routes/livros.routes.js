@@ -8,10 +8,7 @@ import{
  obterLivro,
 } from "../controllers/livros.controller.js"
 
-
-
 const router = express.Router();
-
 
 router.post("/",adicionarLivro);
 router.get("/", listarLivros);
