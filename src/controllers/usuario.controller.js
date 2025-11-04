@@ -1,11 +1,11 @@
-import {db} from "../config/db.js"
+import { db} from "../config/db.js";
+// ============================
+//  Rotas CRUD
+// ============================
 
 
 
-
-
-
-export async function criarUser(req, res){
+export async function criarUsuario(req, res) {
   try {
     const { nome, email, senha } = req.body;
     if (!nome || !email || !senha)
@@ -23,7 +23,7 @@ export async function criarUser(req, res){
 };
 
 
-export async function ListarUsers(req, res) {
+export async function listarUsuarios (req, res){
   try {
     const [rows] = await db.execute("SELECT * FROM usuarios");
     res.json(rows);
@@ -33,9 +33,9 @@ export async function ListarUsers(req, res) {
 };
 
 
-export async function obterUser (req, res) {
+export async function obterUsuario (req, res){
   try {
-    const [rows] = await db.execute("SELECT * FROM usuarios WHERE id = ?", [
+    const [rows] = await db.execute("SELECT * FROM usuarios WHERE idUsuario = ?", [
       req.params.id,
     ]);
     if (rows.length === 0)
@@ -46,11 +46,11 @@ export async function obterUser (req, res) {
   }
 };
 
-export async function atualizarUser (req, res) {
+export async function atuallizarUsuario(req, res){
   try {
     const { nome, email, senha } = req.body;
     await db.execute(
-      "UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id = ?",
+      "UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE idUsuario = ?",
       [nome, email, senha, req.params.id]
     );
     res.json({ mensagem: "Usuário atualizado com sucesso!" });
@@ -60,9 +60,9 @@ export async function atualizarUser (req, res) {
 };
 
 
-export async function deletarUser (req, res) {
+export async function deletarUsuario (req, res){
   try {
-    await db.execute("DELETE FROM usuarios WHERE id = ?", [req.params.id]);
+    await db.execute("DELETE FROM usuarios WHERE idUsuario = ?", [req.params.id]);
     res.json({ mensagem: "Usuário deletado com sucesso!" });
   } catch (err) {
     res.status(500).json({ erro: err.message });
